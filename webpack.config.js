@@ -3,9 +3,12 @@ const path          = require('path');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './zoom-scroller.js',
+    entry: {
+        'zoom-scroller': './zoom-scroller.js',
+        'specs': './specs.js'
+    },
     output: {
-        filename: 'zoom-scroller.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'build')
     },
     plugins:[

@@ -32,7 +32,7 @@ import {
             filter: blurScroller ? 'blur(4px)' : ''
         };
 
-        return appendElement(parentElement, 'canvas', canvasStyles);
+        return appendElement(document, parentElement, 'canvas', canvasStyles);
     };
 
     const scaleCanvas = (parentElement, canvas, scrollerWidth, isScrollEvent) => {
