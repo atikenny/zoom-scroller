@@ -6,7 +6,7 @@ module.exports = {
     entry: './zoom-scroller.js',
     output: {
         filename: 'zoom-scroller.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'build')
     },
     plugins:[
         new webpack.optimize.UglifyJsPlugin({
