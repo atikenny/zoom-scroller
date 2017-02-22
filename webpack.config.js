@@ -1,5 +1,5 @@
-const webpack   = require('webpack');
-const path      = require('path');
+const webpack       = require('webpack');
+const path          = require('path');
 
 module.exports = {
     devtool: 'source-map',
@@ -16,10 +16,19 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['es2015']
+                        plugins: [
+                            'check-es2015-constants',
+                            'transform-es2015-block-scoping',
+                            'transform-es2015-arrow-functions'
+                        ]
                     }
                 }
             }
         ]
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'examples'),
+        compress: true,
+        port: 3000
     }
 }
