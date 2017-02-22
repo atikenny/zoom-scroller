@@ -1,5 +1,7 @@
 # Zoom scroller
 
+![build status](https://travis-ci.org/atikenny/zoom-scroller.svg?branch=master)
+
 ## Description
 A JS component to include a bird's eye view of your website.
 
