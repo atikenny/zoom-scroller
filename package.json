@@ -9,7 +9,7 @@
   "scripts": {
     "test": "npm run build && jasmine JASMINE_CONFIG_PATH=jasmine.json",
     "build": "webpack",
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server --hot --inline"
   },
   "repository": {
     "type": "git",
@@ -30,11 +30,11 @@
     "babel-core": "6.23.1",
     "babel-loader": "6.3.2",
     "babel-plugin-check-es2015-constants": "6.22.0",
-    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
-    "babel-plugin-transform-es2015-block-scoping": "^6.23.0",
-    "babel-plugin-transform-es2015-shorthand-properties": "^6.22.0",
-    "babel-plugin-transform-es2015-template-literals": "^6.22.0",
-    "babel-polyfill": "^6.23.0",
+    "babel-plugin-transform-es2015-arrow-functions": "6.22.0",
+    "babel-plugin-transform-es2015-block-scoping": "6.23.0",
+    "babel-plugin-transform-es2015-shorthand-properties": "6.22.0",
+    "babel-plugin-transform-es2015-template-literals": "6.22.0",
+    "babel-polyfill": "6.23.0",
     "jasmine": "2.5.3",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.1"
