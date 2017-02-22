@@ -8,6 +8,11 @@ module.exports = {
         filename: 'zoom-scroller.js',
         path: path.resolve(__dirname, 'dist')
     },
+    plugins:[
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
+        })
+    ],
     module: {
         rules: [
             {
@@ -19,7 +24,9 @@ module.exports = {
                         plugins: [
                             'check-es2015-constants',
                             'transform-es2015-block-scoping',
-                            'transform-es2015-arrow-functions'
+                            'transform-es2015-arrow-functions',
+                            'transform-es2015-template-literals',
+                            'transform-es2015-shorthand-properties'
                         ]
                     }
                 }
