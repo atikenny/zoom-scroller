@@ -7,8 +7,9 @@
     "example": "examples"
   },
   "scripts": {
+    "lint": "./node_modules/.bin/eslint **/*.js",
     "test": "npm run build && jasmine JASMINE_CONFIG_PATH=jasmine.json",
-    "build": "webpack",
+    "build": "npm run lint & webpack",
     "dev": "webpack-dev-server --hot --inline"
   },
   "repository": {
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/atikenny/zoom-scroller#readme",
   "devDependencies": {
     "babel-core": "6.23.1",
+    "babel-eslint": "7.1.1",
     "babel-loader": "6.3.2",
     "babel-plugin-check-es2015-constants": "6.22.0",
     "babel-plugin-transform-es2015-arrow-functions": "6.22.0",
@@ -35,6 +37,7 @@
     "babel-plugin-transform-es2015-shorthand-properties": "6.22.0",
     "babel-plugin-transform-es2015-template-literals": "6.22.0",
     "babel-polyfill": "6.23.0",
+    "eslint": "3.16.0",
     "jasmine": "2.5.3",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.1"

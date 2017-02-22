@@ -35,7 +35,7 @@ import {
         return appendElement(document, parentElement, 'canvas', canvasStyles);
     };
 
-    const scaleCanvas = (parentElement, canvas, scrollerWidth, isScrollEvent) => {
+    const scaleCanvas = (parentElement, canvas, scrollerWidth) => {
         const getScrollerScale = (targetWidth) => {
             const scale = 1 / (parentElement.scrollWidth / targetWidth);
 
