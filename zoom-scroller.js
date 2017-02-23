@@ -1,4 +1,8 @@
 import {
+    bodyInlinerFactory
+} from './lib/body-inliner';
+
+import {
     drawSvgToCanvasAsync,
     drawWhereYouAtWindow
 } from './lib/canvas-helpers';
@@ -6,7 +10,9 @@ import {
 import {
     addStyleToElement,
     appendElement,
-    fadeInElement
+    fadeInElement,
+    inlineElementStyles,
+    getElementClone
 } from './lib/dom-helpers';
 
 (() => {
@@ -18,6 +24,10 @@ import {
     };
 
     let ticking = false;
+    const bodyInliner = bodyInlinerFactory(inlineElementStyles, getElementClone);
+
+    const getBlob = (blobParts, options) => new Blob(blobParts, options);
+    const convertNodeListToArray = (nodeList) => Array.from(nodeList);
 
     const appendCanvas = (parentElement, blurScroller) => {
         const canvasStyles = {
@@ -52,7 +62,7 @@ import {
 
     const attachScrollAndResizeEvents = (parentElement, window, canvas, scrollerWidth) => {
         const scaleCallback = (isScrollEvent) => {
-            drawSvgToCanvasAsync(canvas, window, parentElement)
+            drawSvgToCanvasAsync(convertNodeListToArray, bodyInliner.getCachedSvgUrl, canvas, new Image(), window, getBlob, parentElement)
                 .then(onEndDrawingSvg);
 
             if (!isScrollEvent) {
@@ -97,7 +107,7 @@ import {
         ticking = false;
     };
 
-    drawSvgToCanvasAsync(canvas, window, parentElement)
+    drawSvgToCanvasAsync(convertNodeListToArray, bodyInliner.getCachedSvgUrl, canvas, new Image(), window, getBlob, parentElement)
         .then(onEndDrawingSvg);
 
     scaleCanvas(parentElement, canvas, config.scrollerWidth);
