@@ -3,16 +3,11 @@ import {
 } from './lib/body-inliner';
 
 import {
-    drawSvgToCanvasAsync,
-    drawWhereYouAtWindow
+    canvasHelpersFactory
 } from './lib/canvas-helpers';
 
 import {
-    addStyleToElement,
-    appendElement,
-    fadeInElement,
-    inlineElementStyles,
-    getElementClone
+    domHelpersFactory
 } from './lib/dom-helpers';
 
 (() => {
@@ -24,10 +19,13 @@ import {
     };
 
     let ticking = false;
-    const bodyInliner = bodyInlinerFactory(inlineElementStyles, getElementClone);
-
-    const getBlob = (blobParts, options) => new Blob(blobParts, options);
     const convertNodeListToArray = (nodeList) => Array.from(nodeList);
+    const getBlob = (blobParts, options) => new Blob(blobParts, options);
+    const getImage = () => new Image();
+
+    const domHelpers = domHelpersFactory(convertNodeListToArray, window, document);
+    const bodyInliner = bodyInlinerFactory(domHelpers.inlineElementStyles, domHelpers.getElementClone, getBlob, window);
+    const canvasHelpers = canvasHelpersFactory(getImage);
 
     const appendCanvas = (parentElement, blurScroller) => {
         const canvasStyles = {
@@ -42,7 +40,7 @@ import {
             filter: blurScroller ? 'blur(4px)' : ''
         };
 
-        return appendElement(document, parentElement, 'canvas', canvasStyles);
+        return domHelpers.appendElement(parentElement, 'canvas', canvasStyles);
     };
 
     const scaleCanvas = (parentElement, canvas, scrollerWidth) => {
@@ -57,12 +55,12 @@ import {
         canvas.width = parentElement.scrollWidth;
         canvas.height = parentElement.scrollHeight;
 
-        addStyleToElement(canvas, { transform: `scale(${scrollerScale}, ${scrollerScale})` });
+        domHelpers.addStyleToElement(canvas, { transform: `scale(${scrollerScale}, ${scrollerScale})` });
     };
 
     const attachScrollAndResizeEvents = (parentElement, window, canvas, scrollerWidth) => {
         const scaleCallback = (isScrollEvent) => {
-            drawSvgToCanvasAsync(convertNodeListToArray, bodyInliner.getCachedSvgUrl, canvas, new Image(), window, getBlob, parentElement)
+            canvasHelpers.drawSvgToCanvasAsync(bodyInliner.getCachedSvgUrl, canvas, parentElement)
                 .then(onEndDrawingSvg);
 
             if (!isScrollEvent) {
@@ -103,15 +101,15 @@ import {
     const canvas = appendCanvas(parentElement, config.blurScroller);
 
     const onEndDrawingSvg = () => {
-        drawWhereYouAtWindow(parentElement, canvas);
+        canvasHelpers.drawWhereYouAtWindow(parentElement, canvas);
         ticking = false;
     };
 
-    drawSvgToCanvasAsync(convertNodeListToArray, bodyInliner.getCachedSvgUrl, canvas, new Image(), window, getBlob, parentElement)
+    canvasHelpers.drawSvgToCanvasAsync(bodyInliner.getCachedSvgUrl, canvas, parentElement)
         .then(onEndDrawingSvg);
 
     scaleCanvas(parentElement, canvas, config.scrollerWidth);
-    fadeInElement(canvas);
+    domHelpers.fadeInElement(canvas);
 
     attachScrollAndResizeEvents(parentElement, window, canvas, config.scrollerWidth);
     attachCanvasClickEvent(parentElement, canvas);
